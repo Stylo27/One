@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/favicon.ico">
+
+    <title>Guest list</title>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="starter-template.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Guests list</a>
+        </div>
+      </div>
+    </nav>
+
+    <br><br><br>
+    <div class="container">
+    <div class="panel panel-default">
+    <div class="panel-heading"><h4>Guests list</h4></div>
+      <table class="table panel-body table-bordered table-hover table-condensed ">
+          <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Surname</th>
+              <th>Age</th>
+              <th>Gender</th>
+              <th>Hobby</th>
+              <th>Country</th>
+          </tr>
+          <tr><td>1</td><td>Henry</td><td>Jackobs</td><td>22</td><td>M</td><td>hobby_list</td><td>Country</td></tr>
+          <tr><td>2</td><td>Lorem</td><td>Ipsum</td><td>22</td><td>M</td><td>hobby_list</td><td>Country</td></tr>
+          <tr><td>3</td><td>Sit</td><td>Dolor</td><td>22</td><td>M</td><td>hobby_list</td><td>Country</td></tr>
+          <tr><td>4</td><td>Amet</td><td>Consectetur</td><td>22</td><td>F</td><td>hobby_list</td><td>Country</td></tr>
+          <tr><td>5</td><td>Adipisicing</td><td>Elit</td><td>22</td><td>F</td><td>hobby_list</td><td>Country</td></tr>
+          <tr><td>6</td><td>Laborum</td><td>Aperiam</td><td>22</td><td>M</td><td>hobby_list</td><td>Country</td></tr>
+          <tr><td>7</td><td>Saepe</td><td>Placeat</td><td>22</td><td>M</td><td>hobby_list</td><td>Country</td></tr>
+          <tr><td>8</td><td>Nihil</td><td>iusto</td><td>22</td><td>F</td><td>hobby_list</td><td>Country</td></tr>
+          <tr><td>9</td><td>Incidunt</td><td>Eum</td><td>22</td><td>M</td><td>hobby_list</td><td>Country</td></tr>
+          <tr><td>10</td><td>Provident</td><td>Libero</td><td>22</td><td>M</td><td>hobby_list</td><td>Country</td></tr>
+
+      </table>
+    </div>
+    
+    
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Create user</h3>
+      </div>
+      <div class="panel-body">
+        <form class="form-horizontal" role="form" id="create_form">
+          <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">Name</label>
+            <div class="col-sm-10">
+            <input type="text" class="form-control" id="name"  placeholder="Enter your name">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="surname" class="col-sm-2 control-label">Surname</label>
+            <div class="col-sm-10">
+            <input type="text" class="form-control" id="surname" placeholder="Enter your surname">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="age" class="col-sm-2 control-label">Age</label>
+            <div class="col-sm-10">
+            <input type="number" class="form-control" id="age" placeholder="How old you">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              Gender:
+              <div class="radio_gender">
+                <label id="gender">
+                  <input type="radio" name="gender" value="male"> Male
+                  <br>
+                  <input type="radio" name="gender" value="female"> Female
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group  card">
+            <div class="col-sm-offset-2 col-sm-10">
+              Hobby:
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" name="motorcycle" id="motorcycle" value="yes" > Motorcycle <br>
+                  <input type="checkbox" name="auto" id="auto" value="yes" > Auto <br>
+                  <input type="checkbox" name="football" id="football" value="yes" > Football <br>
+                  <input type="checkbox" name="golf" id="golf" value="yes" > Golf <br>
+                  <input type="checkbox" name="bicycle" id="bicycle" value="yes" > Bicycle <br>
+                  <input type="checkbox" name="photo" id="photo" value="yes" > Photo <br>
+                  <input type="checkbox" name="technics" id="technics" value="yes" > Technics <br>
+                  <input type="checkbox" name="music" id="music" value="yes" > Music <br>
+                  <input type="checkbox" name="parachute" id="parachute" value="yes" > Parachute <br>
+                  <input type="checkbox" name="painting" id="painting" value="yes" > Painting <br>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              Country:
+              <div class="select">
+                <label>
+                  <select name="country" id="country">
+                    <option>Australia</option>
+                    <option>Brazil</option>
+                    <option>Canada</option>
+                    <option>China</option>
+                    <option>Germany</option>
+                    <option>Italy</option>
+                    <option>Japan</option>
+                    <option>Russia</option>
+                    <option>USA</option>
+                    <option>Ukraine</option>
+                  </select>
+                </label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+              <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    </div>
+
+    
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
