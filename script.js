@@ -12,16 +12,18 @@ function createUserRow(index, user) {
         $("<td />").text(user.gender),
         $("<td />").text(userhobby),
         $("<td />").text(user.country)
-    ])
 
+    ])
     $("table#users_table tbody").append(user_row)
+
 };
 
 function iterLocalStorage() {
     var users = JSON.parse(localStorage.getItem('users') || '[]');
     for(var k = 0, length3 = users.length; k < length3; k++){
         console.log(users[k]);
-        createUserRow(k ,users[k])
+        console.log(typeof(users[k]))
+        createUserRow(k ,JSON.parse(users[k]))
     }
     
 
@@ -49,6 +51,8 @@ $(function(){
             }
         }
         createUserRow('0', userObj); //Вот тут добавил вызов
+
+
         json_form = JSON.stringify(userObj);
   
 
