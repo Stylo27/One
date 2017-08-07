@@ -39,5 +39,6 @@ $(function(){
         ])
 
         $("table#users_table tbody").append(user_row)
+    }
 });
     
