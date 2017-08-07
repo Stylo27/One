@@ -1,4 +1,5 @@
 function createUserRow(index, user) {
+    // Добавляет пользователя в таблицу
     if (user.hobby != []){
         var userhobby = user.hobby
     } else {
@@ -11,7 +12,8 @@ function createUserRow(index, user) {
         $("<td />").text(user.user_age),
         $("<td />").text(user.gender),
         $("<td />").text(userhobby),
-        $("<td />").text(user.country)
+        $("<td/>").text(user.country),
+        $('<button id="userDelete" class="btn btn-danger" />').text("Delete")
 
     ])
     $("table#users_table tbody").append(user_row)
@@ -19,21 +21,37 @@ function createUserRow(index, user) {
 };
 
 function iterLocalStorage() {
+    // Итерирует данные в LocalStorage
     var users = JSON.parse(localStorage.getItem('users') || '[]');
     for(var k = 0, length3 = users.length; k < length3; k++){
         console.log(users[k]);
         console.log(typeof(users[k]))
-        createUserRow(k ,JSON.parse(users[k]))
+        createUserRow(k+1 ,JSON.parse(users[k]))
     }
     
 
-}
+};
 
 iterLocalStorage();
 
+function removeUser(id){
+    var userList = JSON.parse(localStorage["users"]);
+    var userConfirm = confirm("Delete this user ?");
+    if (userConfirm){
+        delete(userList[event.target]);
+        localStorage.setItem("users", JSON.stringify(_.compact(userList)));
+        location.reload();   
+    };
+
+
+    
+
+
+
+
+
 $(function(){
     $('#create_form').on('submit', function (e) {
-        e.preventDefault();
         var form = $(e.target);
         serial_form = form.serializeArray();
         console.log('serial_form : ',serial_form)
@@ -50,18 +68,26 @@ $(function(){
                 userObj[serial_form[k].name] = serial_form[k].value;
             }
         }
-        createUserRow('0', userObj); //Вот тут добавил вызов
 
 
         json_form = JSON.stringify(userObj);
-  
-
         var users = JSON.parse(localStorage.getItem('users') || '[]');
+        createUserRow((users.length+1), userObj); // Добавляет юзера в таблицу 
         users.push(json_form);
         localStorage.setItem("users", JSON.stringify(users));
+        
         console.log('users :',users)
+        
+        form.reset();
 
     });
+
+    $("button").click(function(event) {
+        /* Act on the event */
+        var del = $("button").siblings().eq(0).val();
+        console.log(del)
+        // removeUser();
+        });
 
 });
   
