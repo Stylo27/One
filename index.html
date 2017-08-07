@@ -31,7 +31,7 @@
     <div class="container">
     <div class="panel panel-default">
     <div class="panel-heading"><h4>Guests list</h4></div>
-      <table class="table panel-body table-bordered table-hover table-condensed ">
+      <table class="table panel-body table-bordered table-hover table-condensed" id="users_table">
           <tr>
               <th>#</th>
               <th>Name</th>
@@ -66,19 +66,19 @@
           <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
-            <input type="text" class="form-control" id="name"  placeholder="Enter your name">
+            <input type="text" class="form-control"  name="user_name" placeholder="Enter your name">
             </div>
           </div>
           <div class="form-group">
             <label for="surname" class="col-sm-2 control-label">Surname</label>
             <div class="col-sm-10">
-            <input type="text" class="form-control" id="surname" placeholder="Enter your surname">
+            <input type="text" class="form-control" name="user_surname" placeholder="Enter your surname">
             </div>
           </div>
           <div class="form-group">
             <label for="age" class="col-sm-2 control-label">Age</label>
             <div class="col-sm-10">
-            <input type="number" class="form-control" id="age" placeholder="How old you">
+            <input type="number" class="form-control" name="user_age" placeholder="How old you">
             </div>
           </div>
           <div class="form-group">
@@ -98,16 +98,16 @@
               Hobby:
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" name="motorcycle" id="motorcycle" value="yes" > Motorcycle <br>
-                  <input type="checkbox" name="auto" id="auto" value="yes" > Auto <br>
-                  <input type="checkbox" name="football" id="football" value="yes" > Football <br>
-                  <input type="checkbox" name="golf" id="golf" value="yes" > Golf <br>
-                  <input type="checkbox" name="bicycle" id="bicycle" value="yes" > Bicycle <br>
-                  <input type="checkbox" name="photo" id="photo" value="yes" > Photo <br>
-                  <input type="checkbox" name="technics" id="technics" value="yes" > Technics <br>
-                  <input type="checkbox" name="music" id="music" value="yes" > Music <br>
-                  <input type="checkbox" name="parachute" id="parachute" value="yes" > Parachute <br>
-                  <input type="checkbox" name="painting" id="painting" value="yes" > Painting <br>
+                  <input type="checkbox" name="hobby" value="hobby_moto"> Motorcycle <br>
+                  <input type="checkbox" name="hobby" value="hobby_auto"> Auto <br>
+                  <input type="checkbox" name="hobby" value="hobby_football"> Football <br>
+                  <input type="checkbox" name="hobby" value="hobby_golf" > Golf <br>
+                  <input type="checkbox" name="hobby" value="hobby_bicycle" > Bicycle <br>
+                  <input type="checkbox" name="hobby" value="hobby_photo" > Photo <br>
+                  <input type="checkbox" name="hobby" value="hobby_tech" > Technics <br>
+                  <input type="checkbox" name="hobby" value="hobby_music" > Music <br>
+                  <input type="checkbox" name="hobby" value="hobby_parachute" > Parachute <br>
+                  <input type="checkbox" name="hobby" value="hobby_painting" > Painting <br>
                 </label>
               </div>
             </div>
@@ -153,6 +153,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>
-    <script src="script.js"></script>
+    <script src="./script.js"></script>
   </body>
 </html>

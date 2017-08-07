@@ -1,22 +1,44 @@
-$(function () {
-    var data = $( "#create_form" ).submit(function(event){
-        // var userName = $("#name").val();
-        // var userSurname = $("#surname").val();
-        // var userAge = $("#age").val();
-        // var userGender = $("input:radio:checked").val();
-        // var userHobby = $("input:checkbox:checked");
-        // var a = userHobby.map(function(element){
-        //     return {name : element.name,
-        //             value : element.value
-        //     }
-        // });
-        // console.log(userName);
-        // console.log(userSurname);
-        // console.log(userAge);
-        // console.log(userGender);
-        // console.log(a)
+$(function(){
+    $('#create_form').on('submit', function (e) {
+        e.preventDefault();
+        var form = $(e.target);
+        serial_form = form.serializeArray();
+        userObj = new Object()
+        for(var k = 0, length3 = serial_form.length; k < length3; k++){
+            if(serial_form[k].name === "hobby"){
+                if(userObj["hobby"]){
+                    userObj["hobby"].push(serial_form[k].value)
+                }
+                else{
+                    userObj["hobby"] = [serial_form[k].value]        
+                }
+            } else {
+                userObj[serial_form[k].name] = serial_form[k].value;
+            }
+        }
+        console.log(userObj);
+        json_form = JSON.stringify(userObj);
+        
+        var users = JSON.parse(localStorage.getItem('users') || '[]');
+        users.push(json_form);
+        localStorage.setItem("users", JSON.stringify(users));
+        console.log(users)
+
+        console.log(userObj.user_name)
     });
 
-    console.log(data)
+    $(function createUserRow(index, user) {
+        var user_row = $("<tr />").append([
+            $("<td />").text(index),
+            $("<td />").text(user.user_name),
+            $("<td />").text(user.user_surname),
+            $("<td />").text(user.user_age),
+            $("<td />").text(user.gender),
+            $("<td />").text(user.hobby.join(",")),
+            $("<td />").text(user.country)
+        ])
 
+        $("table#users_table tbody").append(user_row)
+    });
 });
+    
