@@ -1,6 +1,6 @@
 function createUserRow(index, user) {
     if (user.hobby != []){
-        var userhobby = user.hobby.join()
+        var userhobby = user.hobby
     } else {
         userhobby = text("No hobby")
     }
@@ -27,7 +27,7 @@ function iterLocalStorage() {
 
 }
 
-// iterLocalStorage();
+iterLocalStorage();
 
 $(function(){
     $('#create_form').on('submit', function (e) {
