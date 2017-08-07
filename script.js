@@ -27,7 +27,7 @@ $(function(){
         console.log(userObj.user_name)
     });
 
-    $(function createUserRow(index, user) {
+    function createUserRow(index, user) {
         var user_row = $("<tr />").append([
             $("<td />").text(index),
             $("<td />").text(user.user_name),
@@ -39,6 +39,5 @@ $(function(){
         ])
 
         $("table#users_table tbody").append(user_row)
-    });
 });
     
