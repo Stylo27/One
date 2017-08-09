@@ -1,11 +1,11 @@
 function createUserRow(index, user) {
     // Добавляет пользователя в таблицу
-    if (user.hobby != []){
+    if (user.hobby){
         var userhobby = user.hobby
     } else {
-        userhobby = text("No hobby")
+        userhobby = "No hobby"
     }
-    var user_row = $("<tr/>").append([
+    var user_row = $("<tr/>").attr("id", String(index)).append([
         $("<td />").text(index),
         $("<td />").text(user.user_name),
         $("<td />").text(user.user_surname),
@@ -19,19 +19,33 @@ function createUserRow(index, user) {
 
 };
 
-function iterLocalStorage() {
-    // Итерирует данные в LocalStorage
-    var users = JSON.parse(localStorage.getItem('users') || '[]');
-    for(var k = 0, length3 = users.length; k < length3; k++){
-        console.log(users[k]);
-        console.log(typeof(users[k]))
-        createUserRow(k+1 ,JSON.parse(users[k]))
+function hideRows(step){
+    for(var k = 1; k <= step ; k++){
+        var starterElement = $("table#users_table tbody tr").eq(String(k)).hide()
+
     }
-    
+}
 
-};
 
-iterLocalStorage();
+function currentPage(start=0, end=10){
+    var users = JSON.parse(localStorage.getItem('users') || '[]');
+    var tenUsers = users.slice(start, end)
+    // console.log(tenUsers)
+    for(var k = 0; k < tenUsers.length ; k++){
+            console.log(tenUsers[k])
+            createUserRow(start+1 ,JSON.parse(tenUsers[k]))
+            start++
+        }
+}
+
+
+function nextPage(step=10){
+    hideRows(step)
+    currentPage(step, step+10)
+}
+
+currentPage();
+// iterLocalStorage();
 
 function removeUser(id){
     var userList = JSON.parse(localStorage["users"]);
@@ -44,15 +58,9 @@ function removeUser(id){
 };
 
 
-    
-
-
-
-
 
 $(function(){
     $('#create_form').on('submit', function (e) {
-        e.false;
         var form = $(e.target);
         serial_form = form.serializeArray();
         console.log('serial_form : ',serial_form)
@@ -61,8 +69,7 @@ $(function(){
                 if(serial_form[k].name === "hobby"){
                     if(userObj["hobby"]){
                         userObj["hobby"].push(serial_form[k].value)
-                    }
-                    else{
+                    } else {
                         userObj["hobby"] = [serial_form[k].value]        
                     }
                 } else {
@@ -71,9 +78,8 @@ $(function(){
             }
 
 
-        json_form = JSON.stringify(userObj);
+        var json_form = JSON.stringify(userObj);
         var users = JSON.parse(localStorage.getItem('users') || '[]');
-        createUserRow((users.length+1), userObj); // Добавляет юзера в таблицу 
         users.push(json_form);
         localStorage.setItem("users", JSON.stringify(users));
         
@@ -86,11 +92,14 @@ $(function(){
 
 });
   
-$("button").on("click", function(e) {
+$("#users_table tbody tr button").on("click", function(e) {
     /* Act on the event */
     var button = $(e.target)
     var del = button.attr("id")
-    console.log(del)
     removeUser(del);
     })
     
+$(".panel-default ul.pagination li button#next-button").on("click", function(e){
+    console.log('click')
+    nextPage();
+})
