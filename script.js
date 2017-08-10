@@ -15,46 +15,40 @@ function createUserRow(index, user) {
         $("<td/>").text(user.country),
         $('<button  class="btn btn-danger" />').attr("id", String(index)).text("Delete").on('click', function(){removeUser(index)})
     ])
-    $("table#users_table tbody").append(user_row)
+    $("table#users_table tbody").append(user_row.hide())
 
 };
 
-function hideRows(step){
-    for(var k = 1; k <= step ; k++){
-       $("table#users_table tbody tr").eq(String(k)).hide()
-       $("table#users_table tbody tr").eq(String(k+10)).hide()
-    }
-}
+function showRows(step){
+    $("table#users_table tbody tr").slice(step, step+12).prevUntil(".table_header").toggle()
+};
 
-
-function currentPage(start=0, end=10){
+function currentPage(){
     var users = JSON.parse(localStorage.getItem('users') || '[]');
-    var tenUsers = users.slice(start, end)
-    
-    for(var k = 0; k < tenUsers.length ; k++){
-            console.log(tenUsers[k])
-            createUserRow(start+1 ,JSON.parse(tenUsers[k]))
-            start++
+    for(var k = 0; k < users.length ; k++){
+            // console.log(users[k])
+            createUserRow(k+1 ,JSON.parse(users[k]))
         }
-}
+};
 
 
-var step = 0
+var step = 0;
 
 function nextPage(){
-    step += 10
-    hideRows(step)
-    currentPage(step, step+10)
-}
+    step += 10;
+    console.log(step)
+    showRows(step)
+};
 
 function prevPage(){
-    step -= 10
-    hideRows(step)
+    step -= 10;
+    hideNextRows(step);
     currentPage(step, step-10)
-}
+};
 
 
 currentPage();
+showRows(step);
 
 function removeUser(index){
     var userList = JSON.parse(localStorage["users"]);
