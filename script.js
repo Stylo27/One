@@ -13,7 +13,7 @@ function createUserRow(index, user) {
         $("<td />").text(user.gender),
         $("<td />").text(userhobby),
         $("<td/>").text(user.country),
-        $('<button  class="btn btn-danger" />').attr("id", String(index)).text("Delete")
+        $('<button  class="btn btn-danger" />').attr("id", String(index)).text("Delete").on('click', function(){removeUser(index)})
     ])
     $("table#users_table tbody").append(user_row)
 
@@ -30,7 +30,7 @@ function hideRows(step){
 function currentPage(start=0, end=10){
     var users = JSON.parse(localStorage.getItem('users') || '[]');
     var tenUsers = users.slice(start, end)
-    // console.log(tenUsers)
+    
     for(var k = 0; k < tenUsers.length ; k++){
             console.log(tenUsers[k])
             createUserRow(start+1 ,JSON.parse(tenUsers[k]))
@@ -47,11 +47,11 @@ function nextPage(step=10){
 currentPage();
 // iterLocalStorage();
 
-function removeUser(id){
+function removeUser(index){
     var userList = JSON.parse(localStorage["users"]);
     var userConfirm = confirm("Delete this user ?");
     if (userConfirm){
-        delete(userList[id-1]);
+        delete(userList[index-1]);
         localStorage.setItem("users", JSON.stringify(_.compact(userList)));
         location.reload();   
     };
@@ -92,12 +92,12 @@ $(function(){
 
 });
   
-$("#users_table tbody tr button").on("click", function(e) {
-    /* Act on the event */
-    var button = $(e.target)
-    var del = button.attr("id")
-    removeUser(del);
-    })
+// $("#users_table tbody tr button").on("click", function(e) {
+//     /* Act on the event */
+//     var button = $(e.target)
+//     var del = button.attr("id")
+//     removeUser(del);
+//     })
     
 $(".panel-default ul.pagination li button#next-button").on("click", function(e){
     console.log('click')
