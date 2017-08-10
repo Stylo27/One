@@ -21,8 +21,8 @@ function createUserRow(index, user) {
 
 function hideRows(step){
     for(var k = 1; k <= step ; k++){
-        var starterElement = $("table#users_table tbody tr").eq(String(k)).hide()
-
+       $("table#users_table tbody tr").eq(String(k)).hide()
+       $("table#users_table tbody tr").eq(String(k+10)).hide()
     }
 }
 
@@ -39,13 +39,22 @@ function currentPage(start=0, end=10){
 }
 
 
-function nextPage(step=10){
+var step = 0
+
+function nextPage(){
+    step += 10
     hideRows(step)
     currentPage(step, step+10)
 }
 
+function prevPage(){
+    step -= 10
+    hideRows(step)
+    currentPage(step, step-10)
+}
+
+
 currentPage();
-// iterLocalStorage();
 
 function removeUser(index){
     var userList = JSON.parse(localStorage["users"]);
@@ -92,14 +101,13 @@ $(function(){
 
 });
   
-// $("#users_table tbody tr button").on("click", function(e) {
-//     /* Act on the event */
-//     var button = $(e.target)
-//     var del = button.attr("id")
-//     removeUser(del);
-//     })
     
 $(".panel-default ul.pagination li button#next-button").on("click", function(e){
-    console.log('click')
+    console.log('click-next')
     nextPage();
+})
+
+$(".panel-default ul.pagination li button#prev-button").on("click", function(e){
+    console.log('click-prev')
+    prevPage();
 })
