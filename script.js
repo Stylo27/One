@@ -19,31 +19,53 @@ function createUserRow(index, user) {
 
 };
 
+
+
+
+function hidePrevRows(step){
+    for(var k = step-10; k > 0 ; k--){
+        console.log('prev-hide')
+        $("table#users_table tbody tr").eq(k).attr("style", "display:none")
+    }
+     
+}
+
+function hideNextRows(step){
+    var users = JSON.parse(localStorage.getItem('users') || '[]');
+    for(var k = step; k <= users.length; k++){
+        console.log('next-hide')
+        $("table#users_table tbody tr").eq(k).attr("style", "display:none")
+    }
+
+}       
+
 function showRows(step){
-    $("table#users_table tbody tr").slice(step, step+12).prevUntil(".table_header").toggle()
+    for(var k = step-9; k <= step; k++){
+        $("table#users_table tbody tr").eq(k).attr("style", "")
+    }
 };
 
 function currentPage(){
     var users = JSON.parse(localStorage.getItem('users') || '[]');
     for(var k = 0; k < users.length ; k++){
-            // console.log(users[k])
             createUserRow(k+1 ,JSON.parse(users[k]))
         }
 };
 
-
-var step = 0;
+var step = 10;
 
 function nextPage(){
     step += 10;
-    console.log(step)
-    showRows(step)
+    console.log(step);
+    showRows(step);
+    hidePrevRows(step)
 };
 
 function prevPage(){
     step -= 10;
+    console.log(step);
     hideNextRows(step);
-    currentPage(step, step-10)
+    showRows(step);
 };
 
 
@@ -85,9 +107,6 @@ $(function(){
         var users = JSON.parse(localStorage.getItem('users') || '[]');
         users.push(json_form);
         localStorage.setItem("users", JSON.stringify(users));
-        
-        console.log('users :',users)
-        
         location.reload();
 
     });
@@ -97,11 +116,9 @@ $(function(){
   
     
 $(".panel-default ul.pagination li button#next-button").on("click", function(e){
-    console.log('click-next')
     nextPage();
 })
 
 $(".panel-default ul.pagination li button#prev-button").on("click", function(e){
-    console.log('click-prev')
     prevPage();
 })
