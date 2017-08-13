@@ -39,16 +39,26 @@ function hideNextRows(step){
 }       
 
 function showRows(step){
-    for(var k = step-9; k <= step; k++){
+    var users = JSON.parse(localStorage.getItem('users') || '[]');
+    var id = Math.ceil(users.length/10);
+    for(var k = step-10; k <= step; k++){
         $("table#users_table tbody tr").eq(k).attr("style", "")
-    }
+    };
+    if (step === 10) {
+        $("ul.pagination li button#prev-button").attr("style", "display:none")
+    } else if (String(step) === String(id*10)) {
+        $("ul.pagination li button#next-button").attr("style", "display:none")
+    }else{
+        $("ul.pagination li button#prev-button").attr("style", "");
+        $("ul.pagination li button#next-button").attr("style", "")
+    };
 };
 
 function currentPage(){
     var users = JSON.parse(localStorage.getItem('users') || '[]');
     var id = users.length;
-    for(var k = users.length-1; k > 0 ; k--, id--){
-            createUserRow(id ,JSON.parse(users[k]))
+    for(var k = users.length; k > 0 ; k--, id--){
+            createUserRow(id ,JSON.parse(users[k-1]))
         }
 };
 
@@ -70,7 +80,7 @@ function prevPage(){
 
 
 function countPage(step) {
-    users = JSON.parse(localStorage.getItem('users') || '[]');
+    var users = JSON.parse(localStorage.getItem('users') || '[]');
     var round = Math.ceil(users.length/10);
     for(var k = 1; k < round+1 ; k++){
         $("ul.pagination").append($("<button/>").text(k).attr("id", String(k)).on('click', function(){}))
@@ -97,8 +107,8 @@ function removeUser(index){
 $(function(){
     $('#create_form').on('submit', function (e) {
         var form = $(e.target);
-        serial_form = form.serializeArray();
-        userObj = new Object()
+        var serial_form = form.serializeArray();
+        var userObj = new Object()
             for(var k = 0, length3 = serial_form.length; k < length3; k++){
                 if(serial_form[k].name === "hobby"){
                     if(userObj["hobby"]){
