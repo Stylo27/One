@@ -1,3 +1,9 @@
+var step = 10;
+var id = undefined
+
+console.log("first:",id)
+
+
 function createUserRow(index, user) {
     if (user.hobby){
         var userhobby = user.hobby;
@@ -5,14 +11,26 @@ function createUserRow(index, user) {
         userhobby = "No hobby"
     }
     var user_row = $("<tr/>").attr("id", String(index)).append([
-        $("<td />").text(index),
-        $("<td />").text(user.user_name),
-        $("<td />").text(user.user_surname),
-        $("<td />").text(user.user_age),
-        $("<td />").text(user.gender),
-        $("<td />").text(userhobby),
+        $("<td/>").text(index),
+        $("<td/>").text(user.user_name),
+        $("<td/>").text(user.user_surname),
+        $("<td/>").text(user.user_age),
+        $("<td/>").text(user.gender),
+        $("<td/>").text(userhobby),
         $("<td/>").text(user.country),
-        $('<button  class="btn btn-danger" />').attr("id", String(index)).text("Delete").on('click', function(){removeUser(index)})
+        $('<button class="btn btn-primary" href="div#edit-card"/>').attr("id", String(index)).text("Edit").click(function() {
+            $("button#create-btn").hide()
+            $("div#edit-card").attr("style", "");
+            var elementClick = $(this).attr("href");
+            var destination = $(elementClick).offset().top;
+            $("html:not(:animated),body:not(:animated)").animate({
+                  scrollTop: destination
+                }, 800);
+            id = index
+            console.log(index)
+            console.log(id)
+            }),
+        $('<button class="btn btn-danger"/>').attr("id", String(index)).text("Delete").on('click', function(){removeUser(index)})
     ])
     $("table#users_table tbody").append(user_row.hide())
 
@@ -62,7 +80,6 @@ function currentPage(){
         }
 };
 
-var step = 10;
 
 function nextPage(){
     step += 10;
@@ -86,7 +103,56 @@ function countPage(step) {
         $("ul.pagination").append($("<button/>").text(k).attr("id", String(k)).on('click', function(){}))
     };
 
-}
+};
+
+function createUser(e) {
+    var form = $(e.target);
+    console.log(form)
+    var serial_form = form.serializeArray();
+    var userObj = new Object()
+        for(var k = 0, length3 = serial_form.length; k < length3; k++){
+            if(serial_form[k].name === "hobby"){
+                if(userObj["hobby"]){
+                    userObj["hobby"].push(serial_form[k].value)
+                } else {
+                    userObj["hobby"] = [serial_form[k].value]        
+                }
+            } else {
+                userObj[serial_form[k].name] = serial_form[k].value;
+            }
+        }
+
+
+    var json_form = JSON.stringify(userObj);
+    var users = JSON.parse(localStorage.getItem('users') || '[]');
+    users.push(json_form);
+    localStorage.setItem("users", JSON.stringify(users));
+};
+
+
+function editUser (e, id) {
+    var editForm = $(e.target);
+
+    var serialEdit = editForm.serializeArray();
+    var editUserObj = new Object()
+    for(var k = 0, length3 = serialEdit.length; k < length3; k++){
+            if(serialEdit[k].name === "hobby"){
+                if(editUserObj["hobby"]){
+                    editUserObj["hobby"].push(serialEdit[k].value)
+                } else {
+                    editUserObj["hobby"] = [serialEdit[k].value]        
+                }
+            } else {
+                editUserObj[serialEdit[k].name] = serialEdit[k].value;
+            };
+        };
+    var json_editForm = JSON.stringify(editUserObj);
+    var users = JSON.parse(localStorage.getItem('users') || '[]');
+    users[id-1] = json_editForm
+    alert(json_editForm)
+    alert(users)
+    localStorage.setItem("users", JSON.stringify(_.compact(users)));
+};
 
 currentPage();
 showRows(step);
@@ -104,34 +170,19 @@ function removeUser(index){
 
 
 
-$(function(){
-    $('#create_form').on('submit', function (e) {
-        var form = $(e.target);
-        var serial_form = form.serializeArray();
-        var userObj = new Object()
-            for(var k = 0, length3 = serial_form.length; k < length3; k++){
-                if(serial_form[k].name === "hobby"){
-                    if(userObj["hobby"]){
-                        userObj["hobby"].push(serial_form[k].value)
-                    } else {
-                        userObj["hobby"] = [serial_form[k].value]        
-                    }
-                } else {
-                    userObj[serial_form[k].name] = serial_form[k].value;
-                }
-            }
 
-
-        var json_form = JSON.stringify(userObj);
-        var users = JSON.parse(localStorage.getItem('users') || '[]');
-        users.push(json_form);
-        localStorage.setItem("users", JSON.stringify(users));
-        location.reload();
-
-    });
-
+$('#create_form').on('submit', function (e) {
+    createUser(e);
+    location.reload();
 
 });
+
+$('#edit_submit').on('submit', function(e){
+    editUser(e, id);
+    alert(id)
+    // location.reload();
+});
+
    
 
 $("ul.pagination li button#next-button").on("click", function(e){
@@ -145,7 +196,7 @@ $("ul.pagination li button#prev-button").on("click", function(e){
 
 $("button#create-btn").click(function() {
     $(this).attr("style", "display: none");
-    $("div#create-form").attr("style", "");
+    $("div#create-card").attr("style", "");
     var elementClick = $(this).attr("href");
     var destination = $(elementClick).offset().top;
     $("html:not(:animated),body:not(:animated)").animate({
