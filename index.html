@@ -44,18 +44,16 @@
       </table>
     </div>
 
-    <div class="container">
-      <div class="panel-default">
-        <ul class="pagination">
-          <li><button id="prev-button">&laquo;</button></li>
-          <li><button id="next-button">&raquo;</button></li>
-        </ul>
-       </div> 
+    <div class="container" id="pag-container">
+      <ul class="pagination">
+        <li><button id="prev-button">&laquo;</button></li>
+        <li><button id="next-button">&raquo;</button></li>
+      </ul> 
     </div>
     
     
-
-    <div class="panel panel-default">
+    <button type="button" id="create-btn" href="div#create-form" class="btn btn-success">Create user</button>
+    <div class="panel panel-default" id="create-form" style="display: none">
       <div class="panel-heading">
         <h3 class="panel-title">Create user</h3>
       </div>
@@ -96,16 +94,16 @@
               Hobby:
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" name="hobby" value="hobby_moto"> Motorcycle <br>
-                  <input type="checkbox" name="hobby" value="hobby_auto"> Auto <br>
-                  <input type="checkbox" name="hobby" value="hobby_football"> Football <br>
-                  <input type="checkbox" name="hobby" value="hobby_golf" > Golf <br>
-                  <input type="checkbox" name="hobby" value="hobby_bicycle" > Bicycle <br>
-                  <input type="checkbox" name="hobby" value="hobby_photo" > Photo <br>
-                  <input type="checkbox" name="hobby" value="hobby_tech" > Technics <br>
-                  <input type="checkbox" name="hobby" value="hobby_music" > Music <br>
-                  <input type="checkbox" name="hobby" value="hobby_parachute" > Parachute <br>
-                  <input type="checkbox" name="hobby" value="hobby_painting" > Painting <br>
+                  <input type="checkbox" name="hobby" value="Motorcycle"> Motorcycle <br>
+                  <input type="checkbox" name="hobby" value="Auto"> Auto <br>
+                  <input type="checkbox" name="hobby" value="Football"> Football <br>
+                  <input type="checkbox" name="hobby" value="Golf" > Golf <br>
+                  <input type="checkbox" name="hobby" value="Bicycle" > Bicycle <br>
+                  <input type="checkbox" name="hobby" value="Photo" > Photo <br>
+                  <input type="checkbox" name="hobby" value="Technics" > Technics <br>
+                  <input type="checkbox" name="hobby" value="Music" > Music <br>
+                  <input type="checkbox" name="hobby" value="Parachute" > Parachute <br>
+                  <input type="checkbox" name="hobby" value="Painting" > Painting <br>
                 </label>
               </div>
             </div>

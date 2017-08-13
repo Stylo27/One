@@ -1,8 +1,7 @@
 function createUserRow(index, user) {
-    // Добавляет пользователя в таблицу
     if (user.hobby){
-        var userhobby = user.hobby
-    } else {
+        var userhobby = user.hobby;
+        } else {
         userhobby = "No hobby"
     }
     var user_row = $("<tr/>").attr("id", String(index)).append([
@@ -47,8 +46,9 @@ function showRows(step){
 
 function currentPage(){
     var users = JSON.parse(localStorage.getItem('users') || '[]');
-    for(var k = 0; k < users.length ; k++){
-            createUserRow(k+1 ,JSON.parse(users[k]))
+    var id = users.length;
+    for(var k = users.length-1; k > 0 ; k--, id--){
+            createUserRow(id ,JSON.parse(users[k]))
         }
 };
 
@@ -69,8 +69,18 @@ function prevPage(){
 };
 
 
+function countPage(step) {
+    users = JSON.parse(localStorage.getItem('users') || '[]');
+    var round = Math.ceil(users.length/10);
+    for(var k = 1; k < round+1 ; k++){
+        $("ul.pagination").append($("<button/>").text(k).attr("id", String(k)).on('click', function(){}))
+    };
+
+}
+
 currentPage();
 showRows(step);
+countPage()
 
 function removeUser(index){
     var userList = JSON.parse(localStorage["users"]);
@@ -88,7 +98,6 @@ $(function(){
     $('#create_form').on('submit', function (e) {
         var form = $(e.target);
         serial_form = form.serializeArray();
-        console.log('serial_form : ',serial_form)
         userObj = new Object()
             for(var k = 0, length3 = serial_form.length; k < length3; k++){
                 if(serial_form[k].name === "hobby"){
@@ -113,12 +122,23 @@ $(function(){
 
 
 });
-  
-    
-$(".panel-default ul.pagination li button#next-button").on("click", function(e){
-    nextPage();
-})
+   
 
-$(".panel-default ul.pagination li button#prev-button").on("click", function(e){
+$("ul.pagination li button#next-button").on("click", function(e){
+    nextPage();
+});
+
+$("ul.pagination li button#prev-button").on("click", function(e){
     prevPage();
-})
+});
+
+
+$("button#create-btn").click(function() {
+    $(this).attr("style", "display: none");
+    $("div#create-form").attr("style", "");
+    var elementClick = $(this).attr("href");
+    var destination = $(elementClick).offset().top;
+    $("html:not(:animated),body:not(:animated)").animate({
+          scrollTop: destination
+        }, 800);
+});  
