@@ -1,7 +1,6 @@
 var step = 10;
 var id = undefined
 
-console.log("first:",id)
 
 
 function createUserRow(index, user) {
@@ -27,8 +26,6 @@ function createUserRow(index, user) {
                   scrollTop: destination
                 }, 800);
             id = index
-            console.log(index)
-            console.log(id)
             }),
         $('<button class="btn btn-danger"/>').attr("id", String(index)).text("Delete").on('click', function(){removeUser(index)})
     ])
@@ -41,7 +38,6 @@ function createUserRow(index, user) {
 
 function hidePrevRows(step){
     for(var k = step-10; k > 0 ; k--){
-        console.log('prev-hide')
         $("table#users_table tbody tr").eq(k).attr("style", "display:none")
     }
      
@@ -50,7 +46,6 @@ function hidePrevRows(step){
 function hideNextRows(step){
     var users = JSON.parse(localStorage.getItem('users') || '[]');
     for(var k = step; k <= users.length; k++){
-        console.log('next-hide')
         $("table#users_table tbody tr").eq(k).attr("style", "display:none")
     }
 
@@ -62,10 +57,16 @@ function showRows(step){
     for(var k = step-10; k <= step; k++){
         $("table#users_table tbody tr").eq(k).attr("style", "")
     };
-    if (step === 10) {
-        $("ul.pagination li button#prev-button").attr("style", "display:none")
-    } else if (String(step) === String(id*10)) {
-        $("ul.pagination li button#next-button").attr("style", "display:none")
+    if (users.length <= 10) {
+        $("ul.pagination li button#next-button").attr("style", "display: none");
+        $("ul.pagination li button#prev-button").attr("style", "display: none");
+    }else if (step === (id*10)) {
+        $("ul.pagination li button#next-button").attr("style", "display:none");
+        $("ul.pagination li button#prev-button").attr("style", "");
+    }else if (users.length > 10 && step === 10) {
+        $("ul.pagination li button#prev-button").attr("style", "display: none");
+        $("ul.pagination li button#next-button").attr("style", "")
+
     }else{
         $("ul.pagination li button#prev-button").attr("style", "");
         $("ul.pagination li button#next-button").attr("style", "")
@@ -107,7 +108,6 @@ function countPage(step) {
 
 function createUser(e) {
     var form = $(e.target);
-    console.log(form)
     var serial_form = form.serializeArray();
     var userObj = new Object()
         for(var k = 0, length3 = serial_form.length; k < length3; k++){
@@ -131,10 +131,10 @@ function createUser(e) {
 
 
 function editUser (e, id) {
+    console.log(id)
     var editForm = $(e.target);
-
     var serialEdit = editForm.serializeArray();
-    var editUserObj = new Object()
+    var editUserObj = new Object();
     for(var k = 0, length3 = serialEdit.length; k < length3; k++){
             if(serialEdit[k].name === "hobby"){
                 if(editUserObj["hobby"]){
@@ -163,8 +163,7 @@ function removeUser(index){
     var userConfirm = confirm("Delete this user ?");
     if (userConfirm){
         delete(userList[index-1]);
-        localStorage.setItem("users", JSON.stringify(_.compact(userList)));
-        location.reload();   
+        localStorage.setItem("users", JSON.stringify(_.compact(userList)));   
     };
 };
 
@@ -177,10 +176,9 @@ $('#create_form').on('submit', function (e) {
 
 });
 
-$('#edit_submit').on('submit', function(e){
+$('#edit_form').on('submit', function(e){
     editUser(e, id);
-    alert(id)
-    // location.reload();
+    location.reload();
 });
 
    
