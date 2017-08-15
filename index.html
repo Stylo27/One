@@ -32,6 +32,7 @@
     <div class="panel panel-default">
     <div class="panel-heading"><h4>Guests list</h4></div>
       <table class="table panel-body table-bordered table-hover table-condensed" id="users_table">
+        <thead>
           <tr class="table_header">
               <th>#</th>
               <th>Name</th>
@@ -41,6 +42,8 @@
               <th>Hobby</th>
               <th>Country</th>
           </tr>
+        </thead>
+        <tbody id="sortable"></tbody>
       </table>
     </div>
 
@@ -49,7 +52,9 @@
         <li><button id="prev-button" style="display: none">&laquo;</button></li>
         <li><button id="next-button" style="display: none">&raquo;</button></li>
       </ul> 
+      Current page: <button id="number-page"></button>
     </div>
+    <br>
     
     
     <button type="button" id="create-btn" href="div#create-card" class="btn btn-success">Create user</button>
@@ -230,6 +235,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js"></script>

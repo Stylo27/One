@@ -33,14 +33,10 @@ function createUserRow(index, user) {
 
 };
 
-
-
-
 function hidePrevRows(step){
     for(var k = step-10; k > 0 ; k--){
-        $("table#users_table tbody tr").eq(k).attr("style", "display:none")
+        $("table#users_table tbody tr").eq(k-1).attr("style", "display:none")
     }
-     
 }
 
 function hideNextRows(step){
@@ -48,13 +44,13 @@ function hideNextRows(step){
     for(var k = step; k <= users.length; k++){
         $("table#users_table tbody tr").eq(k).attr("style", "display:none")
     }
-
 }       
 
 function showRows(step){
     var users = JSON.parse(localStorage.getItem('users') || '[]');
     var id = Math.ceil(users.length/10);
-    for(var k = step-10; k <= step; k++){
+
+    for(var k = step-10; k < step; k++){
         $("table#users_table tbody tr").eq(k).attr("style", "")
     };
     if (users.length <= 10) {
@@ -74,37 +70,33 @@ function showRows(step){
 };
 
 function currentPage(){
-    var users = JSON.parse(localStorage.getItem('users') || '[]');
-    var id = users.length;
-    for(var k = users.length; k > 0 ; k--, id--){
-            createUserRow(id ,JSON.parse(users[k-1]))
+    var users = JSON.parse(localStorage.getItem('users') || '[]');   
+    for(var k = users.length; k > 0 ;k--){
+            createUserRow(k, JSON.parse(users[k-1]))
         }
-};
+}
+
 
 
 function nextPage(){
     step += 10;
-    console.log(step);
     showRows(step);
-    hidePrevRows(step)
+    hidePrevRows(step);
+    countPage(step)
 };
 
 function prevPage(){
     step -= 10;
-    console.log(step);
     hideNextRows(step);
     showRows(step);
+    countPage(step)
 };
 
 
 function countPage(step) {
-    var users = JSON.parse(localStorage.getItem('users') || '[]');
-    var round = Math.ceil(users.length/10);
-    for(var k = 1; k < round+1 ; k++){
-        $("ul.pagination").append($("<button/>").text(k).attr("id", String(k)).on('click', function(){}))
-    };
-
+    $("#pag-container button#number-page").text(String(step/10))
 };
+
 
 function createUser(e) {
     var form = $(e.target);
@@ -131,7 +123,6 @@ function createUser(e) {
 
 
 function editUser (e, id) {
-    console.log(id)
     var editForm = $(e.target);
     var serialEdit = editForm.serializeArray();
     var editUserObj = new Object();
@@ -148,15 +139,31 @@ function editUser (e, id) {
         };
     var json_editForm = JSON.stringify(editUserObj);
     var users = JSON.parse(localStorage.getItem('users') || '[]');
-    users[id-1] = json_editForm
-    alert(json_editForm)
-    alert(users)
+    users[id-1] = json_editForm 
     localStorage.setItem("users", JSON.stringify(_.compact(users)));
 };
 
-currentPage();
-showRows(step);
-countPage()
+function sortInLS (array) {
+    var sortedItems = array;
+    localStorage.setItem('sort-order', JSON.stringify(sortedItems));
+    setOrder(sortedItems)
+};
+
+function setOrder (sortedItems){
+    var users = JSON.parse(localStorage.getItem('users') || '[]');
+    var orderArray = sortedItems;
+    orderedUsers = [];
+    for(var k = 0, length3 = orderArray.length; k < length3; k++){
+        for(var n = 0, length3 = users.length; n < length3; n++){
+            if (Number(orderArray[k]) === (n+1)) {
+                orderedUsers.unshift(users[n])
+            }
+        };
+    };
+    localStorage.setItem('users', JSON.stringify(_.compact(orderedUsers)))
+};
+
+
 
 function removeUser(index){
     var userList = JSON.parse(localStorage["users"]);
@@ -165,9 +172,13 @@ function removeUser(index){
         delete(userList[index-1]);
         localStorage.setItem("users", JSON.stringify(_.compact(userList)));   
     };
+    location.reload();
 };
 
 
+currentPage();
+showRows(step);
+countPage(step);
 
 
 $('#create_form').on('submit', function (e) {
@@ -201,3 +212,8 @@ $("button#create-btn").click(function() {
           scrollTop: destination
         }, 800);
 });  
+
+
+$("#sortable").sortable({
+    stop: function(event, ui) {sortInLS($(this).sortable("toArray"))}
+})
