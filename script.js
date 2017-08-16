@@ -26,6 +26,7 @@ function createUserRow(index, user) {
                   scrollTop: destination
                 }, 800);
             id = index
+
             }),
         $('<button class="btn btn-danger"/>').attr("id", String(index)).text("Delete").on('click', function(){removeUser(index)})
     ])
@@ -99,6 +100,7 @@ function countPage(step) {
 
 
 function createUser(e) {
+    $("form#edit")
     var form = $(e.target);
     var serial_form = form.serializeArray();
     var userObj = new Object()
