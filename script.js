@@ -128,7 +128,7 @@ function fillFields(index) {
     var users = JSON.parse(localStorage.getItem('users') || '[]');
     var id = index-1;
     var userDataObject = JSON.parse(users[id]);
-    var allHobbyArray = $('[name = edit-hobby]');
+    var allHobbyArray = $('div#edit-hobby [name = edit-hobby]');
     var allCountry = $("select#edit-country").children()
     $("input#edit-name").attr("value", userDataObject.user_name);
     $("input#edit-surname").attr("value", userDataObject.user_surname);
@@ -148,14 +148,15 @@ function fillFields(index) {
         };
     } else {
         for(var n = 0, length3 = allHobbyArray.length; n < length3; n++){
-                allHobbyArray.eq(n).removeAttr("checked")
+                allHobbyArray.eq(n).removeAttr("checked", "")
             }; 
     };    
     for(var k = 0; k < 10; k++){
             if (userDataObject.country === allCountry.eq(k).val()) {
                 allCountry.eq(k).attr("selected", "true")
             };
-        };    
+        }; 
+
 };
 
 
@@ -163,6 +164,7 @@ function fillFields(index) {
 function editUser (e, id) {
     var editForm = $(e.target);
     var serialEdit = editForm.serializeArray();
+    console.log(serialEdit)
     var editUserObj = new Object();
     for(var k = 0, length3 = serialEdit.length; k < length3; k++){
             if(serialEdit[k].name === "hobby"){
@@ -175,6 +177,7 @@ function editUser (e, id) {
                 editUserObj[serialEdit[k].name] = serialEdit[k].value;
             };
         };
+    console.log(editUserObj);
     var json_editForm = JSON.stringify(editUserObj);
     var users = JSON.parse(localStorage.getItem('users') || '[]');
     users[id-1] = json_editForm 
@@ -221,13 +224,12 @@ countPage(step);
 
 $('#create_form').on('submit', function (e) {
     createUser(e);
-    location.reload();
 
 });
 
 $('#edit_form').on('submit', function(e){
     editUser(e, id);
-    location.reload();
+
 });
 
    
