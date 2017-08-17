@@ -128,7 +128,7 @@ function fillFields(index) {
     var users = JSON.parse(localStorage.getItem('users') || '[]');
     var id = index-1;
     var userDataObject = JSON.parse(users[id]);
-    var allHobbyArray = $('div#edit-hobby [name = edit-hobby]');
+    var allHobbyArray = $('div#edit-hobby').children();
     var allCountry = $("select#edit-country").children()
     $("input#edit-name").attr("value", userDataObject.user_name);
     $("input#edit-surname").attr("value", userDataObject.user_surname);
@@ -140,7 +140,7 @@ function fillFields(index) {
     };
     if (userDataObject.hobby) {
         for(var k = 0, length3 = (userDataObject.hobby).length; k < length3; k++){
-            for(var n = 0, length3 = allHobbyArray.length; n < length3; n++){
+            for(var n = 0, length3 = allHobbyArray.length; n < length3; n+=3){
                 if (userDataObject.hobby[k] === allHobbyArray.eq(n).val()) {
                     allHobbyArray.eq(n).attr("checked", "true")
                 };
