@@ -25,7 +25,8 @@ function createUserRow(index, user) {
             $("html:not(:animated),body:not(:animated)").animate({
                   scrollTop: destination
                 }, 800);
-            id = index
+            id = index;
+            fillFields(index);
 
             }),
         $('<button class="btn btn-danger"/>').attr("id", String(index)).text("Delete").on('click', function(){removeUser(index)})
@@ -100,7 +101,6 @@ function countPage(step) {
 
 
 function createUser(e) {
-    $("form#edit")
     var form = $(e.target);
     var serial_form = form.serializeArray();
     var userObj = new Object()
@@ -122,6 +122,42 @@ function createUser(e) {
     users.push(json_form);
     localStorage.setItem("users", JSON.stringify(users));
 };
+
+
+function fillFields(index) {
+    var users = JSON.parse(localStorage.getItem('users') || '[]');
+    var id = index-1;
+    var userDataObject = JSON.parse(users[id]);
+    var allHobbyArray = $('[name = edit-hobby]');
+    var allCountry = $("select#edit-country").children()
+    $("input#edit-name").attr("value", userDataObject.user_name);
+    $("input#edit-surname").attr("value", userDataObject.user_surname);
+    $("input#edit-age").attr("value", userDataObject.user_age);
+    if (userDataObject.gender === "male") {
+        $("input#edit-male").attr('checked', 'true');
+    }else if (userDataObject.gender === "female"){
+        $("input#edit-female").attr('checked', 'true');
+    };
+    if (userDataObject.hobby) {
+        for(var k = 0, length3 = (userDataObject.hobby).length; k < length3; k++){
+            for(var n = 0, length3 = allHobbyArray.length; n < length3; n++){
+                if (userDataObject.hobby[k] === allHobbyArray.eq(n).val()) {
+                    allHobbyArray.eq(n).attr("checked", "true")
+                };
+            };  
+        };
+    } else {
+        for(var n = 0, length3 = allHobbyArray.length; n < length3; n++){
+                allHobbyArray.eq(n).removeAttr("checked")
+            }; 
+    };    
+    for(var k = 0; k < 10; k++){
+            if (userDataObject.country === allCountry.eq(k).val()) {
+                allCountry.eq(k).attr("selected", "true")
+            };
+        };    
+};
+
 
 
 function editUser (e, id) {

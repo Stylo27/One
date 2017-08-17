@@ -7,14 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="/favicon.ico">
 
     <title>Guest list</title>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    <link href="starter-template.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
   </head>
 
   <body>
@@ -149,19 +146,19 @@
           <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Name</label>
             <div class="col-sm-10">
-            <input type="text" class="form-control"  name="user_name" placeholder="Enter your name">
+            <input type="text" class="form-control" id="edit-name" name="user_name">
             </div>
           </div>
           <div class="form-group">
             <label for="surname" class="col-sm-2 control-label">Surname</label>
             <div class="col-sm-10">
-            <input type="text" class="form-control" name="user_surname" placeholder="Enter your surname">
+            <input type="text" class="form-control" id="edit-surname" name="user_surname">
             </div>
           </div>
           <div class="form-group">
             <label for="age" class="col-sm-2 control-label">Age</label>
             <div class="col-sm-10">
-            <input type="number" class="form-control" name="user_age" placeholder="How old you">
+            <input type="number" class="form-control" id="edit-age" name="user_age">
             </div>
           </div>
           <div class="form-group">
@@ -169,9 +166,9 @@
               Gender:
               <div class="radio_gender">
                 <label id="gender">
-                  <input type="radio" name="gender" value="male"> Male
+                  <input type="radio" name="gender" id="edit-male" value="male"> Male
                   <br>
-                  <input type="radio" name="gender" value="female"> Female
+                  <input type="radio" name="gender" id="edit-female" value="female"> Female
                 </label>
               </div>
             </div>
@@ -179,17 +176,17 @@
           <div class="form-group  card">
             <div class="col-sm-offset-2 col-sm-10">
               Hobby:
-              <div class="checkbox">
-                  <input type="checkbox" name="hobby" id="edit-moto" value="Motorcycle"><label for="edit-moto">Motorcycle</label><br>
-                  <input type="checkbox" name="hobby" id="edit-auto" value="Auto"><label for="edit-auto">Auto</label> <br>
-                  <input type="checkbox" name="hobby" id="edit-foot" value="Football"><label for="edit-foot">Football</label> <br>
-                  <input type="checkbox" name="hobby" id="edit-golf" value="Golf"><label for="edit-golf">Golf</label> <br>
-                  <input type="checkbox" name="hobby" id="edit-bicycle" value="Bicycle"><label for="edit-bicycle">Bicycle</label> <br>
-                  <input type="checkbox" name="hobby" id="edit-photo" value="Photo"><label for="edit-photo">Photo</label> <br>
-                  <input type="checkbox" name="hobby" id="edit-tech" value="Technics"><label for="edit-tech">Technics</label> <br>
-                  <input type="checkbox" name="hobby" id="edit-music" value="Music"><label for="edit-music">Music</label> <br>
-                  <input type="checkbox" name="hobby" id="edit-para" value="Parachute"><label for="edit-para">Parachute</label> <br>
-                  <input type="checkbox" name="hobby" id="edit-paint" value="Painting"><label for="edit-paint">Painting</label> <br>
+              <div class="checkbox" id="edit-hobby">
+                  <input type="checkbox" name="edit-hobby" id="edit-moto" value="Motorcycle"><label for="edit-moto">Motorcycle</label><br>
+                  <input type="checkbox" name="edit-hobby" id="edit-auto" value="Auto"><label for="edit-auto">Auto</label> <br>
+                  <input type="checkbox" name="edit-hobby" id="edit-foot" value="Football"><label for="edit-foot">Football</label> <br>
+                  <input type="checkbox" name="edit-hobby" id="edit-golf" value="Golf"><label for="edit-golf">Golf</label> <br>
+                  <input type="checkbox" name="edit-hobby" id="edit-bicycle" value="Bicycle"><label for="edit-bicycle">Bicycle</label><br>
+                  <input type="checkbox" name="edit-hobby" id="edit-photo" value="Photo"><label for="edit-photo">Photo</label> <br>
+                  <input type="checkbox" name="edit-hobby" id="edit-tech" value="Technics"><label for="edit-tech">Technics</label> <br>
+                  <input type="checkbox" name="edit-hobby" id="edit-music" value="Music"><label for="edit-music">Music</label> <br>
+                  <input type="checkbox" name="edit-hobby" id="edit-para" value="Parachute"><label for="edit-para">Parachute</label> <br>
+                  <input type="checkbox" name="edit-hobby" id="edit-paint" value="Painting"><label for="edit-paint">Painting</label> <br>
               </div>
             </div>
           </div>
@@ -198,7 +195,7 @@
               Country:
               <div class="select">
                 <label>
-                  <select name="country" id="country">
+                  <select name="country" id="edit-country">
                     <option>Australia</option>
                     <option>Brazil</option>
                     <option>Canada</option>
