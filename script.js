@@ -3,21 +3,21 @@ var id = undefined
 
 
 
-function createUserRow(index, user) {
+function createUserRow(user) {
     if (user.hobby){
         var userhobby = user.hobby;
         } else {
         userhobby = "No hobby"
     }
-    var user_row = $("<tr/>").attr("id", String(index)).append([
-        $("<td/>").text(index),
+    var user_row = $("<tr/>").attr("id", String(user.id)).append([
+        $("<td/>").text(user.id + 1),
         $("<td/>").text(user.user_name),
         $("<td/>").text(user.user_surname),
         $("<td/>").text(user.user_age),
         $("<td/>").text(user.gender),
         $("<td/>").text(userhobby),
         $("<td/>").text(user.country),
-        $('<button class="btn btn-primary" href="div#edit-card"/>').attr("id", String(index)).text("Edit").click(function() {
+        $('<button class="btn btn-primary" href="div#edit-card"/>').attr("id", String(user.id)).text("Edit").click(function() {
             $("button#create-btn").hide()
             $("div#edit-card").attr("style", "");
             var elementClick = $(this).attr("href");
@@ -25,11 +25,11 @@ function createUserRow(index, user) {
             $("html:not(:animated),body:not(:animated)").animate({
                   scrollTop: destination
                 }, 800);
-            id = index;
-            fillFields(index);
+            id = user.id;
+            fillFields(user.id);
 
             }),
-        $('<button class="btn btn-danger"/>').attr("id", String(index)).text("Delete").on('click', function(){removeUser(index)})
+        $('<button class="btn btn-danger"/>').attr("id", String(user.id)).text("Delete").on('click', function(){removeUser(user.id)})
     ])
     $("table#users_table tbody").append(user_row.hide())
 
@@ -74,7 +74,7 @@ function showRows(step){
 function currentPage(){
     var users = JSON.parse(localStorage.getItem('users') || '[]');   
     for(var k = users.length; k > 0 ;k--){
-            createUserRow(k, JSON.parse(users[k-1]))
+            createUserRow(JSON.parse(users[k-1]))
         }
 }
 
@@ -99,11 +99,21 @@ function countPage(step) {
     $("#pag-container button#number-page").text(String(step/10))
 };
 
+function parseId () {
+    var users = JSON.parse(localStorage.getItem('users') || '[]');
+    var temp = [];
+    for(var k = 0, length3 = users.length; k < length3; k++){
+        temp.push(JSON.parse(users[k]).id)
+    }
+    return Math.max.apply( Math, temp );
+}
 
 function createUser(e) {
     var form = $(e.target);
+    var users = JSON.parse(localStorage.getItem('users') || '[]');
     var serial_form = form.serializeArray();
     var userObj = new Object()
+    userObj.id = parseId() + 1;
         for(var k = 0, length3 = serial_form.length; k < length3; k++){
             if(serial_form[k].name === "hobby"){
                 if(userObj["hobby"]){
@@ -118,7 +128,6 @@ function createUser(e) {
 
 
     var json_form = JSON.stringify(userObj);
-    var users = JSON.parse(localStorage.getItem('users') || '[]');
     users.push(json_form);
     localStorage.setItem("users", JSON.stringify(users));
 };
@@ -126,36 +135,40 @@ function createUser(e) {
 
 function fillFields(index) {
     var users = JSON.parse(localStorage.getItem('users') || '[]');
-    var id = index-1;
-    var userDataObject = JSON.parse(users[id]);
-    var allHobbyArray = $('div#edit-hobby').children();
-    var allCountry = $("select#edit-country").children()
-    $("input#edit-name").attr("value", userDataObject.user_name);
-    $("input#edit-surname").attr("value", userDataObject.user_surname);
-    $("input#edit-age").attr("value", userDataObject.user_age);
-    if (userDataObject.gender === "male") {
-        $("input#edit-male").attr('checked', 'true');
-    }else if (userDataObject.gender === "female"){
-        $("input#edit-female").attr('checked', 'true');
-    };
-    if (userDataObject.hobby) {
-        for(var k = 0, length3 = (userDataObject.hobby).length; k < length3; k++){
-            for(var n = 0, length3 = allHobbyArray.length; n < length3; n+=3){
-                if (userDataObject.hobby[k] === allHobbyArray.eq(n).val()) {
-                    allHobbyArray.eq(n).attr("checked", "true")
+    for(var k = 0, length3 = users.length; k < length3; k++){
+            var user = JSON.parse(users[k])
+            if (index === user.id){
+                var allHobbyArray = $('div#edit-hobby').children();
+                var allCountry = $("select#edit-country").children()
+                $("input#edit-name").attr("value", user.user_name);
+                $("input#edit-surname").attr("value", user.user_surname);
+                $("input#edit-age").attr("value", user.user_age);
+                if (user.gender === "male") {
+                    $("input#edit-male").attr('checked', 'true');
+                }else if (user.gender === "female"){
+                    $("input#edit-female").attr('checked', 'true');
                 };
-            };  
-        };
-    } else {
-        for(var n = 0, length3 = allHobbyArray.length; n < length3; n++){
-                allHobbyArray.eq(n).removeAttr("checked", "")
-            }; 
-    };    
-    for(var k = 0; k < 10; k++){
-            if (userDataObject.country === allCountry.eq(k).val()) {
-                allCountry.eq(k).attr("selected", "true")
+                if (user.hobby) {
+                    for(var k = 0, length3 = (user.hobby).length; k < length3; k++){
+                        for(var n = 0, length3 = allHobbyArray.length; n < length3; n+=3){
+                            if (user.hobby[k] === allHobbyArray.eq(n).val()) {
+                                allHobbyArray.eq(n).attr("checked", "true")
+                            };
+                        };  
+                    };
+                } else {
+                    for(var n = 0, length3 = allHobbyArray.length; n < length3; n++){
+                            allHobbyArray.eq(n).removeAttr("checked", "")
+                        }; 
+                };    
+                for(var k = 0; k < 10; k++){
+                        if (user.country === allCountry.eq(k).val()) {
+                            allCountry.eq(k).attr("selected", "true")
+                        };
+                    }; 
+                 
             };
-        }; 
+        };
 
 };
 
@@ -164,8 +177,8 @@ function fillFields(index) {
 function editUser (e, id) {
     var editForm = $(e.target);
     var serialEdit = editForm.serializeArray();
-    console.log(serialEdit)
     var editUserObj = new Object();
+    editUserObj.id = id
     for(var k = 0, length3 = serialEdit.length; k < length3; k++){
             if(serialEdit[k].name === "hobby"){
                 if(editUserObj["hobby"]){
@@ -180,8 +193,14 @@ function editUser (e, id) {
     console.log(editUserObj);
     var json_editForm = JSON.stringify(editUserObj);
     var users = JSON.parse(localStorage.getItem('users') || '[]');
-    users[id-1] = json_editForm 
-    localStorage.setItem("users", JSON.stringify(_.compact(users)));
+    for(var k = 0, length3 = users.length; k < length3; k++){
+            var user = JSON.parse(users[k])
+            if (id === user.id){
+                (users[users.indexOf(JSON.stringify(user))]) = json_editForm;
+                localStorage.setItem("users", JSON.stringify(_.compact(users))); 
+                break;  
+            };
+        };
 };
 
 function sortInLS (array) {
@@ -196,7 +215,8 @@ function setOrder (sortedItems){
     orderedUsers = [];
     for(var k = 0, length3 = orderArray.length; k < length3; k++){
         for(var n = 0, length3 = users.length; n < length3; n++){
-            if (Number(orderArray[k]) === (n+1)) {
+            var userObj = JSON.parse(users[n])
+            if (Number(orderArray[k]) === (userObj.id)) {
                 orderedUsers.unshift(users[n])
             }
         };
@@ -207,12 +227,18 @@ function setOrder (sortedItems){
 
 
 function removeUser(index){
-    var userList = JSON.parse(localStorage["users"]);
     var userConfirm = confirm("Delete this user ?");
     if (userConfirm){
-        delete(userList[index-1]);
-        localStorage.setItem("users", JSON.stringify(_.compact(userList)));   
-    };
+        var users = JSON.parse(localStorage.getItem('users') || '[]');
+        for(var k = 0, length3 = users.length; k < length3; k++){
+            var userObj = JSON.parse(users[k])
+            if (index === userObj.id){
+                delete(users[users.indexOf(JSON.stringify(userObj))]);
+                localStorage.setItem("users", JSON.stringify(_.compact(users))); 
+                break;  
+            };
+        };
+    };    
     location.reload();
 };
 
